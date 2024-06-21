@@ -4,6 +4,11 @@ from django.conf import settings
 #from .base import *
 import environ
 
+env = environ.Env()
+environ.Env.read_env()
+
+DEBUG = False
+ALLOWED_HOSTS = ['*']
 
 BASE_DIR = os.path.dirname(os.path.dirname(
     os.path.dirname(os.path.abspath(__file__))))
@@ -90,11 +95,7 @@ CRISPY_TEMPLATE_PACK = 'bootstrap4'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-env = environ.Env()
-environ.Env.read_env()
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
     'debug_toolbar',
