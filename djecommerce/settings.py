@@ -149,8 +149,6 @@ DATABASES = {
     'default': dj_database_url.parse('postgresql://nrtech:TJHt0vP9x0JdfUigAm9Dq8MU4wZcFv9X@dpg-cpqnhlqj1k6c73bk1gl0-a.ohio-postgres.render.com/nrtech_example')
 }
 
-STRIPE_PUBLIC_KEY = config('STRIPE_TEST_PUBLIC_KEY')
-STRIPE_SECRET_KEY = config('STRIPE_TEST_SECRET_KEY')
 DEBUG = config('DEBUG', cast=bool)
 ALLOWED_HOSTS = ['ip-address', 'www.your-website.com']
 
