@@ -1,22 +1,21 @@
 import os
 from decouple import config
-from django.conf import settings
+#from django.conf import settings
 #from .base import *
 import environ
 
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 env = environ.Env()
 environ.Env.read_env()
 
-DEBUG = False
-ALLOWED_HOSTS = ['*']
-
-BASE_DIR = os.path.dirname(os.path.dirname(
-    os.path.dirname(os.path.abspath(__file__))))
-
 SECRET_KEY = config('SECRET_KEY')
 
+config('DEBUG', default=False, cast=bool)
+#DEBUG = False
+ALLOWED_HOSTS = ['*']
+
 INSTALLED_APPS = [
-    
+    'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -29,7 +28,8 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'django_countries',
-    'core'
+    'core',
+    'debug_toolbar',
 ]
 
 MIDDLEWARE = [
@@ -42,7 +42,7 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'allauth.account.middleware.AccountMiddleware',  
    # 'core.middleware.AdminUserMiddleware',  
-    
+    'debug_toolbar.middleware.DebugToolbarMiddleware',
 ]
 
 ROOT_URLCONF = 'djecommerce.urls'
@@ -65,6 +65,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.parse('postgresql://nrtech:TJHt0vP9x0JdfUigAm9Dq8MU4wZcFv9X@dpg-cpqnhlqj1k6c73bk1gl0-a.ohio-postgres.render.com/nrtech_example')
+}
+
 LANGUAGE_CODE = 'en-us'
 TIME_ZONE = 'UTC'
 USE_I18N = True
@@ -80,7 +85,6 @@ STATIC_ROOT = os.path.join(BASE_DIR, 'static_root')
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media_root')
 
 # Auth
-
 AUTHENTICATION_BACKENDS = (
     'django.contrib.auth.backends.ModelBackend',
     'allauth.account.auth_backends.AuthenticationBackend'
@@ -107,21 +111,21 @@ MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
 # DEBUG TOOLBAR SETTINGS
 
-DEBUG_TOOLBAR_PANELS = [
-    'debug_toolbar.panels.versions.VersionsPanel',
-    'debug_toolbar.panels.timer.TimerPanel',
-    'debug_toolbar.panels.settings.SettingsPanel',
-    'debug_toolbar.panels.headers.HeadersPanel',
-    'debug_toolbar.panels.request.RequestPanel',
-    'debug_toolbar.panels.sql.SQLPanel',
-    'debug_toolbar.panels.staticfiles.StaticFilesPanel',
-    'debug_toolbar.panels.templates.TemplatesPanel',
-    'debug_toolbar.panels.cache.CachePanel',
-    'debug_toolbar.panels.signals.SignalsPanel',
-    'debug_toolbar.panels.logging.LoggingPanel',
-    'debug_toolbar.panels.redirects.RedirectsPanel',
-]
-
+if DEBUG:
+    DEBUG_TOOLBAR_PANELS = [
+        'debug_toolbar.panels.versions.VersionsPanel',
+        'debug_toolbar.panels.timer.TimerPanel',
+        'debug_toolbar.panels.settings.SettingsPanel',
+        'debug_toolbar.panels.headers.HeadersPanel',
+        'debug_toolbar.panels.request.RequestPanel',
+        'debug_toolbar.panels.sql.SQLPanel',
+        'debug_toolbar.panels.staticfiles.StaticFilesPanel',
+        'debug_toolbar.panels.templates.TemplatesPanel',
+        'debug_toolbar.panels.cache.CachePanel',
+        'debug_toolbar.panels.signals.SignalsPanel',
+        'debug_toolbar.panels.logging.LoggingPanel',
+        'debug_toolbar.panels.redirects.RedirectsPanel',
+    ]
 
 def show_toolbar(request):
     return True
@@ -131,31 +135,8 @@ DEBUG_TOOLBAR_CONFIG = {
     'INTERCEPT_REDIRECTS': False,
     'SHOW_TOOLBAR_CALLBACK': show_toolbar
 }
-"""
-DATABASES = {
-    'default': {
-       
 
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'nrtech_example',
-        'USER': 'postgres',
-        'PASSWORD': 'Teja@1010',
-        'HOST': 'localhost',
-        'PORT': '5432'
-    }
-}"""
 
-import dj_database_url
-DATABASES = {
-    'default': dj_database_url.parse('postgresql://nrtech:TJHt0vP9x0JdfUigAm9Dq8MU4wZcFv9X@dpg-cpqnhlqj1k6c73bk1gl0-a.ohio-postgres.render.com/nrtech_example')
-}
 
-DEBUG = config('DEBUG', cast=bool)
-ALLOWED_HOSTS = ['ip-address', 'www.your-website.com']
 
-AUTH_PASSWORD_VALIDATORS = [
-    {'NAME': 'django.contrib.auth.password_validation.UserAttributeSimilarityValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.MinimumLengthValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.CommonPasswordValidator'},
-    {'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator'}
-]
+
