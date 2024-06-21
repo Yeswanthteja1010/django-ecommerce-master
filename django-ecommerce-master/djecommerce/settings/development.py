@@ -4,7 +4,7 @@ import environ
 env = environ.Env()
 environ.Env.read_env()
 
-DEBUG = False
+DEBUG = True
 ALLOWED_HOSTS = ['*']
 
 INSTALLED_APPS += [
@@ -57,7 +57,7 @@ DATABASES = {
 
 import dj_database_url
 DATABASES = {
-    'default': dj_database_url.parse('postgresql://nrtech:TJHt0vP9x0JdfUigAm9Dq8MU4wZcFv9X@dpg-cpqnhlqj1k6c73bk1gl0-a.ohio-postgres.render.com/nrtech_example')
+    'default': dj_database_url.parse(env('DATABASE_URL'))
 }
 
 STRIPE_PUBLIC_KEY = config('STRIPE_TEST_PUBLIC_KEY')
