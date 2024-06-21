@@ -11,7 +11,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(
 SECRET_KEY = config('SECRET_KEY')
 
 INSTALLED_APPS = [
-    
+   
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
@@ -24,7 +24,9 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap4',
     'django_countries',
-    'core'
+    'core',
+    'debug_toolbar',
+    'django.contrib.admin',
 ]
 
 MIDDLEWARE = [
@@ -39,6 +41,7 @@ MIDDLEWARE = [
    # 'core.middleware.AdminUserMiddleware',  
     
 ]
+MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
 
 ROOT_URLCONF = 'djecommerce.urls'
 
@@ -96,13 +99,9 @@ environ.Env.read_env()
 DEBUG = False
 ALLOWED_HOSTS = ['*']
 
-INSTALLED_APPS += [
-    'debug_toolbar',
-    'django.contrib.admin',
-    
-]
 
-MIDDLEWARE += ['debug_toolbar.middleware.DebugToolbarMiddleware', ]
+
+
 
 # DEBUG TOOLBAR SETTINGS
 
