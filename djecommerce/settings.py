@@ -65,9 +65,23 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'djecommerce.wsgi.application'
 
-import dj_database_url
+"""import dj_database_url
 DATABASES = {
     'default': dj_database_url.parse('postgresql://nrtech:TJHt0vP9x0JdfUigAm9Dq8MU4wZcFv9X@dpg-cpqnhlqj1k6c73bk1gl0-a.ohio-postgres.render.com/nrtech_example')
+}"""
+
+DATABASES = {
+    'default': {
+        #'ENGINE': 'django.db.backends.sqlite3',
+        #'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'nrtech_example',
+        'USER': 'postgres',
+        'PASSWORD': 'Teja@1010',
+        'HOST': 'localhost',
+        'PORT': '5432'
+    }
 }
 
 LANGUAGE_CODE = 'en-us'
